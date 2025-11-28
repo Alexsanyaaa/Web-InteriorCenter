@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Продукты — Интерьер-Центр</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+      <style>
+    /* Дополнительные стили для поиска */
+    .search-container {
+      margin: 18px auto;
+      padding: 0 var(--container-padding);
+      max-width: var(--max-width);
+    }
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .search-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .search-btn {
+      padding: 12px 20px;
+      background: var(--color-accent-primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .search-btn:hover {
+      background: #0d6a61;
+    }
+    .search-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .search-filters button {
+      padding: 8px 15px;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .search-filters button.active, .search-filters button:hover {
+      background: var(--color-accent-primary);
+      color: white;
+    }
+    /* Дополнительные стили для корзины */
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 24px;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--color-danger);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .cart-modal {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 350px;
+      background: var(--color-card);
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      z-index: 100;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-modal.open {
+      transform: translateX(0);
+    }
+    .cart-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .cart-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .cart-item-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .cart-item-price {
+      color: var(--color-danger);
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .quantity-btn {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quantity-value {
+      min-width: 20px;
+      text-align: center;
+    }
+    .cart-remove {
+      color: var(--color-danger);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .cart-footer {
+      padding: 20px;
+      border-top: 1px solid var(--color-border);
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .checkout-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--color-accent-secondary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .checkout-btn:hover {
+      background: #0da471;
+    }
+    /* Добавленный стиль для кнопки "В корзину" */
+    .add-to-cart-btn {
+      background: var(--color-accent-secondary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    .add-to-cart-btn:hover {
+      background: #0da471;
+    }
+    /* Стиль для индикатора остатка */
+    .stock-info {
+      font-size: 12px;
+      color: var(--color-muted);
+      margin-top: 5px;
+    }
+    .stock-info.out-of-stock {
+      color: var(--color-danger);
+    }
+  </style>
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="Pic\logo.svg" alt="Логотип">
+        <h1>ИНТЕРЬЕР-ЦЕНТР</h1>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="products.html">Продукты</a>
+      </nav>
+      <div id="loginContainer">
+        <!-- Форма входа отображается по умолчанию -->
+        <form id="loginForm" class="login-form" aria-label="Форма входа">
+          <input type="text" id="username" placeholder="логин" autocomplete="username">
+          <input type="password" id="password" placeholder="пароль" autocomplete="current-password">
+          <input type="submit" value="войти">
+          <nav><a href="register.html" style="margin-top:85px; margin-left:-350px; width:73px" class="btn btn-ghost">Регистрация</a></nav>
+        </form>
+        <!-- Сообщение "Добро пожаловать" отображается при успешном входе -->
+        <div id="welcomeMessage" class="welcome-message" style="display: none; align-items: center; gap: 10px;">
+          <span id="welcomeText"></span>
+          <button id="logoutBtn" class="btn btn-ghost" style="padding: 4px 8px; font-size: 12px;">Выйти</button>
+        </div>
+      </div>
+      <!-- Иконка корзины -->
+      <div class="cart-icon" id="cartIcon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </div>
+    <div class="container">
+      <div id="login-message"></div>
+    </div>
+  </header>
+  <main class="main">
+    <aside class="sidebar">
+      <nav>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="products.html">Продукты</a>
+      </nav>
+    </aside>
+    <section class="content">
+      <div class="card">
+        <h1>Каталог Продуктов</h1>
+        <p>Широкий ассортимент мебели для кухонь, спален, гостиных и других комнат.</p>
+      </div>
+      <!-- Поиск -->
+      <div class="search-container">
+        <div class="search-box">
+          <input type="text" id="searchInput" class="search-input" placeholder="Поиск товаров...">
+          <button id="searchBtn" class="search-btn">Поиск</button>
+        </div>
+        <div class="search-filters">
+          <button class="filter-btn active" data-category="all">Все</button>
+          <button class="filter-btn" data-category="kuhni">Кухни</button>
+          <button class="filter-btn" data-category="spalni">Спальни</button>
+          <button class="filter-btn" data-category="molodezhnye">Молодежные</button>
+          <button class="filter-btn" data-category="khranenie">Хранение</button>
+          <button class="filter-btn" data-category="stoly-i-stulya">Столы и стулья</button>
+          <button class="filter-btn" data-category="gostinye">Гостиные</button>
+        </div>
+      </div>
+      <!-- Категория Кухни -->
+      <div class="card" id="kuhni">
+        <h2>Кухни</h2>
+        <div class="product-grid">
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/1.jpg" alt="Кухня Модель 1" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Кухня Модель 1</h3>
+                <p class="product-short-desc">Фасады: МДФ, цвет: Белый глянец. Материал корпуса: ЛДСП. Размер: 2.5 м.</p>
+                <div class="product-price">15 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/01-kuhni/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="1" data-category="kuhni">В корзину</button>
+                <div class="stock-info" id="stock-1">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Кухня Модель 1</h4>
+              <p>Это стильная и функциональная кухня, подходящая для небольших помещений. Материал фасадов - МДФ с покрытием пленкой ПВХ. Цвет - Белый глянец. Материал корпуса - ЛДСП. Комплектация может варьироваться. В комплект входят: верхние и нижние шкафы, столешница, мойка. Размер: 2.5 м.</p>
+              <div class="price-original">17 000 ₽</div>
+              <div class="discount">-12%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/3-1.jpg" alt="Кухня Модель 2" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Кухня Модель 2</h3>
+                <p class="product-short-desc">Фасады: массив дерева, цвет: Венге/Дуб молочный. Столешница и мойка в комплекте.</p>
+                <div class="product-price">18 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/01-kuhni/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="2" data-category="kuhni">В корзину</button>
+                <div class="stock-info" id="stock-2">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Кухня Модель 2</h4>
+              <p>Современная кухня с угловым гарнитуром. Материал корпуса - ЛДСП, фасады - массив дерева. Цвет - Венге/Дуб молочный. В комплект входят столешница и мойка. Отличное решение для просторной кухни.</p>
+              <div class="price-original">20 000 ₽</div>
+              <div class="discount">-10%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/1-1.jpg" alt="Модульная кухня" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Модульная кухня</h3>
+                <p class="product-short-desc">Гибкая система, различные комплектующие и цвета. Материал: ЛДСП.</p>
+                <div class="product-price">22 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/01-kuhni/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="3" data-category="kuhni">В корзину</button>
+                <div class="stock-info" id="stock-3">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Модульная кухня</h4>
+              <p>Гибкая система, позволяющая собрать идеальное решение под ваше пространство и потребности. Различные комплектующие и цвета. Материал: ЛДСП. Варианты фасадов: МДФ, массив. Возможна индивидуальная сборка.</p>
+              <div class="price-original">25 000 ₽</div>
+              <div class="discount">-12%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/2-1.jpg" alt="Кухня с островом" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Кухня с островом</h3>
+                <p class="product-short-desc">Фасады: МДФ, цвет: Белый матовый. В комплекте: остров с мойкой. Материал: ЛДСП.</p>
+                <div class="product-price">32 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/01-kuhni/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="4" data-category="kuhni">В корзину</button>
+                <div class="stock-info" id="stock-4">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Кухня с островом</h4>
+              <p>Просторная кухня с островом, который может использоваться как обеденный стол или дополнительная рабочая поверхность. Фасады - МДФ, цвет - Белый матовый. Материал корпуса - ЛДСП. В комплекте: остров с мойкой, верхние и нижние шкафы.</p>
+              <div class="price-original">35 000 ₽</div>
+              <div class="discount">-9%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Категория Спальни -->
+      <div class="card" id="spalni">
+        <h2>Спальни</h2>
+        <div class="product-grid">
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2025/04/Spalnya_4_4-scaled.jpg" alt="Спальня Модель 1" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Спальня Модель 1</h3>
+                <p class="product-short-desc">Кровать, тумбочки и шкаф. Материал: ЛДСП. Цвет: Белый/Серый.</p>
+                <div class="product-price">25 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/03-spalni/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="5" data-category="spalni">В корзину</button>
+                <div class="stock-info" id="stock-5">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Спальня Модель 1</h4>
+              <p>Уютный комплект из кровати, тумбочек и шкафа. Материал - ЛДСП. Цвет - Белый/Серый. Идеально подходит для молодой семьи. В комплект входят: кровать 1.6 м, 2 тумбочки, шкаф-купе.</p>
+              <div class="price-original">27 000 ₽</div>
+              <div class="discount">-7%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2025/09/  Модульные-спальни.png" alt="Модульная спальня" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Модульная спальня</h3>
+                <p class="product-short-desc">Кровать, изголовье, тумбы, комод, шкаф-купе. Материал: массив сосны. Цвет: Орех.</p>
+                <div class="product-price">30 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/03-spalni/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="6" data-category="spalni">В корзину</button>
+                <div class="stock-info" id="stock-6">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Модульная спальня</h4>
+              <p>Просторный гарнитур с изголовьем кровати, прикроватными тумбами, комодом и шкафом-купе. Материал - массив сосны. Цвет - Орех. Возможна индивидуальная сборка и выбор комплектующих.</p>
+              <div class="price-original">32 000 ₽</div>
+              <div class="discount">-6%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/3.jpg" alt="Кровать" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Кровать ортопедическая</h3>
+                <p class="product-short-desc">Конструкция с ортопедическим основанием. Размеры: 90х200, 120х200, 160х200 см.</p>
+                <div class="product-price">12 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/03-spalni/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="7" data-category="spalni">В корзину</button>
+                <div class="stock-info" id="stock-7">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Кровать</h4>
+              <p>Удобная и прочная конструкция с ортопедическим основанием. Размеры: 90х200, 120х200, 160х200 см. Материал каркаса - массив дерева. Возможны различные варианты обивки изголовья.</p>
+              <div class="price-original">14 000 ₽</div>
+              <div class="discount">-14%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2025/04/Spalnya_4_4-scaled.jpg" alt="Спальня с балдахином" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Спальня с балдахином</h3>
+                <p class="product-short-desc">Кровать с балдахином, прикроватные тумбы, шкаф. Материал: ЛДСП. Цвет: Белый/Золото.</p>
+                <div class="product-price">35 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/03-spalni/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="8" data-category="spalni">В корзину</button>
+                <div class="stock-info" id="stock-8">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Спальня с балдахином</h4>
+              <p>Роскошная спальня с кроватью, украшенной балдахином. Комплект включает кровать, прикроватные тумбы и шкаф. Материал - ЛДСП. Цвет - Белый/Золото. Создаст атмосферу уюта и романтики.</p>
+              <div class="price-original">38 000 ₽</div>
+              <div class="discount">-8%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Категория Молодежные -->
+      <div class="card" id="molodezhnye">
+        <h2>Молодежные</h2>
+        <div class="product-grid">
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/9.jpg" alt="Молодежная Модель 1" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Молодежная Модель 1</h3>
+                <p class="product-short-desc">Кровать, письменный стол, шкаф, полки. Материал: ЛДСП. Цвет: Белый/Голубой.</p>
+                <div class="product-price">18 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/04-molodezhnye/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="9" data-category="molodezhnye">В корзину</button>
+                <div class="stock-info" id="stock-9">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Молодежная Модель 1</h4>
+              <p>Яркий и функциональный комплект для подростковой комнаты. Включает кровать, письменный стол, шкаф и полки. Материал - ЛДСП. Цвет - Белый/Голубой. Много места для хранения и учебы.</p>
+              <div class="price-original">20 000 ₽</div>
+              <div class="discount">-10%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/28.jpg" alt="Модульная молодежная" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Модульная молодежная</h3>
+                <p class="product-short-desc">Гибкая система мебели, адаптируемая под рост. Материал: ЛДСП. Цвета: на выбор.</p>
+                <div class="product-price">24 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/04-molodezhnye/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="10" data-category="molodezhnye">В корзину</button>
+                <div class="stock-info" id="stock-10">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Модульная молодежная</h4>
+              <p>Гибкая система мебели, которую можно адаптировать под рост и предпочтения ребенка. Многофункциональные элементы. Материал - ЛДСП. Цвета - на выбор. Возможна индивидуальная сборка.</p>
+              <div class="price-original">26 000 ₽</div>
+              <div class="discount">-8%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/08/  Ронда_1-Крафт-серый-scaled.jpg" alt="Модульная молодежная Ронда" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Ронда</h3>
+                <p class="product-short-desc">Кровать, стол, шкаф, полки. Материал: ЛДСП. Цвет: Крафт-серый.</p>
+                <div class="product-price">22 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/04-molodezhnye/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="11" data-category="molodezhnye">В корзину</button>
+                <div class="stock-info" id="stock-11">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Модульная молодежная Ронда</h4>
+              <p>Современный комплект с интересным дизайном. Включает кровать, письменный стол, шкаф и полки. Материал - ЛДСП. Цвет - Крафт-серый. Удобно и стильно.</p>
+              <div class="price-original">26 000 ₽</div>
+              <div class="discount">-15%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/9.jpg" alt="Молодежная с рабочей зоной" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Молодежная с рабочей зоной</h3>
+                <p class="product-short-desc">Кровать, стол с полками, шкаф. Материал: ЛДСП. Цвет: Белый/Серый.</p>
+                <div class="product-price">20 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/04-molodezhnye/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="12" data-category="molodezhnye">В корзину</button>
+                <div class="stock-info" id="stock-12">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Молодежная с рабочей зоной</h4>
+              <p>Комплект, включающий удобную кровать и полноценную рабочую зону с полками. Материал - ЛДСП. Цвет - Белый/Серый. Отличное решение для школьника или студента.</p>
+              <div class="price-original">23 000 ₽</div>
+              <div class="discount">-13%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Категория Хранение -->
+      <div class="card" id="khranenie">
+        <h2>Хранение</h2>
+        <div class="product-grid">
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/27.jpg" alt="Комод" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Комод</h3>
+                <p class="product-short-desc">4 ящика. Шкаф с полками Материал: ЛДСП. Цвет: Белый. Размеры: 80х40х90 см.</p>
+                <div class="product-price">8 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/sistemy_khraneniya/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="13" data-category="khranenie">В корзину</button>
+                <div class="stock-info" id="stock-13">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Комод</h4>
+              <p>Вместительный комод с 4 ящиками для хранения постельного белья, одежды и мелочей. Материал - ЛДСП. Цвет - Белый. Размеры: 80х40х90 см. Классический дизайн.</p>
+              <div class="price-original">9 000 ₽</div>
+              <div class="discount">-11%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/28.jpg" alt="Стеллаж" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Стеллаж</h3>
+                <p class="product-short-desc">Открытая конструкция. Материал: ЛДСП. Цвет: Бук. Размеры: 100х30х180 см.</p>
+                <div class="product-price">5 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/sistemy_khraneniya/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="14" data-category="khranenie">В корзину</button>
+                <div class="stock-info" id="stock-14">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Стеллаж</h4>
+              <p>Открытая конструкция для книг, декоративных предметов и игрушек. Материал - ЛДСП. Цвет - Бук. Размеры: 100х30х180 см. Современный дизайн.</p>
+              <div class="price-original">5 500 ₽</div>
+              <div class="discount">-9%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/27.jpg" alt="Шкаф купе" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Шкаф купе</h3>
+                <p class="product-short-desc">3 двери. Материал: ЛДСП. Цвет: Белый/Зеркало. Размеры: 200х60х220 см.</p>
+                <div class="product-price">15 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/sistemy_khraneniya/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="15" data-category="khranenie">В корзину</button>
+                <div class="stock-info" id="stock-15">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Шкаф купе</h4>
+              <p>Вместительный шкаф купе с 3 дверями. Материал - ЛДСП. Цвет - Белый/Зеркало. Размеры: 200х60х220 см. Отличное решение для хранения одежды и обуви.</p>
+              <div class="price-original">17 000 ₽</div>
+              <div class="discount">-12%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Категория Столы и стулья -->
+      <div class="card" id="stoly-i-stulya">
+        <h2>Столы и стулья</h2>
+        <div class="product-grid">
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2025/02/  СТП06-1200_Белый.jpg" alt="Стол" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Стол</h3>
+                <p class="product-short-desc">Обеденный. Материал: ЛДСП. Цвет столешницы: Белый. Размеры: 120х80 см.</p>
+                <div class="product-price">7 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/stoly_i_stulya/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="16" data-category="stoly-i-stulya">В корзину</button>
+                <div class="stock-info" id="stock-16">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Стол</h4>
+              <p>Обеденный стол из прочного ЛДСП. Доступны различные размеры и цвета столешницы. Каркас - металл. Размеры: 120х80 см. Подходит для 4-6 человек.</p>
+              <div class="price-original">7 500 ₽</div>
+              <div class="discount">-7%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2025/01/  Журнальные.png" alt="Стул" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Стул</h3>
+                <p class="product-short-desc">С мягким сиденьем. Материал: деревянный каркас, ткань. Цвет: серый.</p>
+                <div class="product-price">2 500 ₽</div>
+                <a href="https://interior-center.ru/product-category/stoly_i_stulya/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="17" data-category="stoly-i-stulya">В корзину</button>
+                <div class="stock-info" id="stock-17">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Стул</h4>
+              <p>Удобный стул с мягким сиденьем и деревянным каркасом. Материал сиденья - ткань. Цвет - серый. Идеально подходит для кухни или рабочего места.</p>
+              <div class="price-original">2 800 ₽</div>
+              <div class="discount">-11%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2025/02/  СТП06-1200_Белый.jpg" alt="Письменный стол" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Письменный стол</h3>
+                <p class="product-short-desc">Письменный стол c полкой. Материал: ЛДСП. Цвет: Белый. Размеры: 100х60х75 см.</p>
+                <div class="product-price">6 500 ₽</div>
+                <a href="https://interior-center.ru/product-category/stoly_i_stulya/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="18" data-category="stoly-i-stulya">В корзину</button>
+                <div class="stock-info" id="stock-18">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Письменный стол</h4>
+              <p>Удобный стол для работы или учебы с дополнительной полкой для книг и канцелярии. Материал - ЛДСП. Цвет - Белый. Размеры: 100х60х75 см.</p>
+              <div class="price-original">7 000 ₽</div>
+              <div class="discount">-7%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Категория Гостиные -->
+      <div class="card" id="gostinye">
+        <h2>Гостиные</h2>
+        <div class="product-grid">
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2024/06/1.jpg" alt="Гостиная Модель 1" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Гостиная Модель 1</h3>
+                <p class="product-short-desc">Диван, 2 кресла, журнальный столик. Материал: ткань, ЛДСП. Цвет: бежевый.</p>
+                <div class="product-price">45 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/06-komplekty-gostinyh/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="19" data-category="gostinye">В корзину</button>
+                <div class="stock-info" id="stock-19">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Гостиная Модель 1</h4>
+              <p>Удобный комплект для гостиной, включающий диван, 2 кресла и журнальный столик. Материал обивки - ткань. Материал столика - ЛДСП. Цвет - бежевый. Создаст уютную атмосферу.</p>
+              <div class="price-original">48 000 ₽</div>
+              <div class="discount">-6%</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://interior-center.ru/wp-content/uploads/2025/04/Spalnya_4_4-scaled.jpg" alt="Гостиная с угловым диваном" class="product-image">
+            <div class="product-info">
+              <div class="product-info-content">
+                <h3>Гостиная модель 2</h3>
+                <p class="product-short-desc">Угловой диван, столик, ТВ-тумба. Материал: ткань, ЛДСП. Цвет: серый.</p>
+                <div class="product-price">52 000 ₽</div>
+                <a href="https://interior-center.ru/product-category/06-komplekty-gostinyh/" class="product-link">Подробнее</a>
+              </div>
+              <div class="product-actions">
+                <button class="add-to-cart-btn" data-id="20" data-category="gostinye">В корзину</button>
+                <div class="stock-info" id="stock-20">Загрузка...</div>
+              </div>
+            </div>
+            <div class="tooltip">
+              <h4>Гостиная с угловым диваном</h4>
+              <p>Просторная гостиная с угловым диваном, обеспечивающим комфорт для большого количества людей. В комплект входят: диван, столик, ТВ-тумба. Материал - ткань, ЛДСП. Цвет - серый.</p>
+              <div class="price-original">55 000 ₽</div>
+              <div class="discount">-5%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-header">
+      <h2>Корзина</h2>
+      <button class="cart-close" id="cartClose">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Итого:</span>
+        <span id="cartTotal">0 ₽</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">Оформить заказ</button>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="footer-bottom__inner">
+          <div class="text15">© 2025 Интерьер-Центр</div>
+          <div class="text15">Тел: +7 (800) 700-20-58 | Email: <a href="mailto:info@interier-center.ru" class="link">info@interier-center.ru</a></div>
+          <div class="text15">Все права защищены</a></div>
+		  		   <div class="text15">Политика конфеденциальности : <a href="consent.pdf" class="link">Просмотреть соглашение (PDF)</a></div>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+// --- Код для обработки формы входа/выхода и сохранения состояния ---
+function checkLoginState() {
+  const token = localStorage.getItem('authToken');
+  const loginForm = document.getElementById('loginForm');
+  const welcomeMessage = document.getElementById('welcomeMessage');
+  const welcomeText = document.getElementById('welcomeText');
+  if (token) {
+    loginForm.style.display = 'none';
+    welcomeMessage.style.display = 'flex';
+    welcomeText.textContent = `Добро пожаловать!`;
+  } else {
+    loginForm.style.display = 'flex';
+    welcomeMessage.style.display = 'none';
+  }
+}
+
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const u = document.getElementById("username").value.trim();
+  const p = document.getElementById("password").value.trim();
+  const msg = document.getElementById("login-message");
+  if (!u || !p) {
+    msg.textContent = "Не введён логин или пароль";
+    msg.style.display = "block";
+    msg.style.color = "#ef4444";
+    return;
+  }
+  fetch('http://localhost:5000/api/Auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: u, password: p })
+  })
+  .then(response => {
+      if (!response.ok) throw new Error('Неверный логин или пароль');
+      return response.json();
+  })
+  .then(data => {
+      localStorage.setItem('authToken', data.token);
+      checkLoginState();
+      msg.textContent = `Успешный вход как ${u}!`;
+      msg.style.display = "block";
+      msg.style.color = "#0f766e";
+      setTimeout(() => { msg.style.display = "none"; }, 3000);
+  })
+  .catch(err => {
+      if (err instanceof TypeError) {
+          msg.textContent = "Ошибка сети: не удалось подключиться к серверу.";
+      } else {
+          msg.textContent = err.message;
+      }
+      msg.style.display = "block";
+      msg.style.color = "#ef4444";
+      setTimeout(() => { msg.style.display = "none"; }, 5000);
+  });
+});
+
+document.getElementById("logoutBtn").addEventListener("click", function() {
+  localStorage.removeItem('authToken');
+  checkLoginState();
+  const msg = document.getElementById("login-message");
+  msg.textContent = "Вы вышли из системы.";
+  msg.style.display = "block";
+  msg.style.color = "#0f766e";
+  setTimeout(() => { msg.style.display = "none"; }, 3000);
+});
+
+window.addEventListener('load', checkLoginState);
+
+// --- Корзина ---
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartIcon = document.getElementById('cartIcon');
+const cartModal = document.getElementById('cartModal');
+const cartClose = document.getElementById('cartClose');
+const cartItems = document.getElementById('cartItems');
+const cartCount = document.getElementById('cartCount');
+const cartTotal = document.getElementById('cartTotal');
+const checkoutBtn = document.getElementById('checkoutBtn');
+const productCards = document.querySelectorAll('.product-card');
+
+// Кэш остатков с сервера (для отображения "можно добавить")
+let productStockCache = {}; // { productId: stock }
+
+// Получаем список товаров с сервера и кэшируем stock
+async function fetchProductsFromBackend() {
+    try {
+        const response = await fetch('http://localhost:5000/api/products');
+        if (!response.ok) throw new Error(`Ошибка сети: ${response.status}`);
+        const products = await response.json();
+        // Заполняем кэш
+        productStockCache = {};
+        products.forEach(p => {
+            productStockCache[p.id] = p.stock;
+        });
+        return products;
+    } catch (error) {
+        console.error('Ошибка при получении товаров:', error);
+        return [];
+    }
+}
+
+// Обновление остатков на UI (но НЕ на сервере!)
+function updateStockDisplay(productId, backendStock) {
+    const stockElement = document.getElementById(`stock-${productId}`);
+    const inCart = cart.find(item => item.id === productId)?.quantity || 0;
+    const availableToBuy = backendStock - inCart; // ключевая логика!
+
+    if (stockElement) {
+        stockElement.textContent = `Доступно: ${availableToBuy} шт.`;
+        if (availableToBuy <= 0) {
+            stockElement.classList.add('out-of-stock');
+            const button = document.querySelector(`.add-to-cart-btn[data-id="${productId}"]`);
+            if (button) {
+                button.disabled = true;
+                button.textContent = 'Нет в наличии';
+                button.style.backgroundColor = '#d1d5db';
+            }
+        } else {
+            stockElement.classList.remove('out-of-stock');
+            const button = document.querySelector(`.add-to-cart-btn[data-id="${productId}"]`);
+            if (button) {
+                button.disabled = false;
+                button.textContent = 'В корзину';
+                button.style.backgroundColor = '';
+            }
+        }
+    }
+}
+
+// Обновление корзины в UI
+function updateCart() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        const cartItemElement = document.createElement('div');
+        cartItemElement.classList.add('cart-item');
+        cartItemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div class="cart-item-details">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">${itemTotal.toLocaleString('ru-RU')} ₽</div>
+                <div class="cart-item-controls">
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                        <span class="quantity-value">${item.quantity}</span>
+                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                    </div>
+                    <button class="cart-remove" data-id="${item.id}">Удалить</button>
+                </div>
+            </div>
+        `;
+        cartItems.appendChild(cartItemElement);
+    });
+    cartTotal.textContent = `${total.toLocaleString('ru-RU')} ₽`;
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Обновляем отображение остатков для всех товаров
+    Object.keys(productStockCache).forEach(id => {
+        const pid = parseInt(id);
+        const backendStock = productStockCache[pid];
+        updateStockDisplay(pid, backendStock);
+    });
+}
+
+// Добавление в корзину
+async function addToCart(productId) {
+    const backendStock = productStockCache[productId];
+    if (backendStock === undefined) {
+        alert('Товар не найден');
+        return;
+    }
+
+    const inCart = cart.find(item => item.id === productId)?.quantity || 0;
+    const availableToBuy = backendStock - inCart;
+
+    if (availableToBuy <= 0) {
+        alert('Товар закончился');
+        return;
+    }
+
+    const existingItem = cart.find(item => item.id === productId);
+    if (existingItem) {
+        if (availableToBuy > 0) {
+            existingItem.quantity++;
+        } else {
+            alert('Нельзя добавить больше доступного количества');
+            return;
+        }
+    } else {
+        // Загружаем данные товара (для name, price, image)
+        const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+        if (!response.ok) {
+            alert('Ошибка при получении данных товара');
+            return;
+        }
+        const product = await response.json();
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: 1,
+            image: product.imageUrl
+        });
+    }
+
+    updateCart(); // обновит и UI, и отобразит правильное "доступно"
+}
+
+// Удаление из корзины
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCart();
+}
+
+// Изменение количества
+function updateCartItemQuantity(productId, change) {
+    const item = cart.find(item => item.id === productId);
+    if (!item) return;
+
+    const backendStock = productStockCache[productId];
+    const inCart = item.quantity;
+    const availableToBuy = backendStock + inCart;
+
+    if (change === 1) {
+        if (inCart < availableToBuy) {
+            item.quantity++;
+        } else {
+            alert('Нельзя добавить больше доступного');
+            return;
+        }
+    } else if (change === -1) {
+        if (item.quantity >= 1) {
+            item.quantity--;
+        } else {
+            removeFromCart(productId);
+            return;
+        }
+    }
+
+    updateCart();
+}
+
+// Инициализация
+async function initializeApp() {
+    const backendProducts = await fetchProductsFromBackend();
+    if (backendProducts.length > 0) {
+        // Обновляем данные товаров на странице
+        productCards.forEach(card => {
+            const productId = parseInt(card.querySelector('.add-to-cart-btn').dataset.id);
+            const backendProduct = backendProducts.find(p => p.id === productId);
+            if (backendProduct) {
+                const shortDescElement = card.querySelector('.product-short-desc');
+                const nameElement = card.querySelector('.product-info h3');
+                const priceElement = card.querySelector('.product-price');
+                const imageElement = card.querySelector('.product-image');
+                if (shortDescElement) shortDescElement.textContent = backendProduct.description || '';
+                if (nameElement) nameElement.textContent = backendProduct.name;
+                if (priceElement) priceElement.textContent = `${backendProduct.price.toLocaleString('ru-RU')} ₽`;
+                if (imageElement && backendProduct.imageUrl) imageElement.src = backendProduct.imageUrl;
+            }
+        });
+        // Обновляем UI корзины и остатков
+        updateCart();
+    } else {
+        // fallback (опционально)
+        const fallback = {1:5,2:3,3:2,4:8,5:10,6:9,7:4,8:12,9:6,10:20,11:7,12:5,13:8,14:15,15:3,16:10,17:12,18:9,19:2,20:1};
+        productStockCache = fallback;
+        updateCart();
+    }
+}
+
+// Обработчики
+document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const id = parseInt(e.target.dataset.id);
+        addToCart(id);
+    });
+});
+
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('quantity-btn')) {
+        const id = parseInt(e.target.dataset.id);
+        const change = e.target.classList.contains('plus') ? 1 : -1;
+        updateCartItemQuantity(id, change);
+    } else if (e.target.classList.contains('cart-remove')) {
+        const id = parseInt(e.target.dataset.id);
+        removeFromCart(id);
+    }
+});
+
+cartIcon.addEventListener('click', () => {
+    cartModal.classList.add('open');
+    updateCart();
+});
+
+cartClose.addEventListener('click', () => {
+    cartModal.classList.remove('open');
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === cartModal) {
+        cartModal.classList.remove('open');
+    }
+});
+
+// ОФОРМЛЕНИЕ ЗАКАЗА — только здесь обновляется stock на сервере!
+checkoutBtn.addEventListener('click', async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Войдите в систему!');
+        return;
+    }
+    if (cart.length === 0) {
+        alert('Корзина пуста!');
+        return;
+    }
+
+    const order = {
+        TotalAmount: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        Items: cart.map(item => ({
+            ProductId: item.id,
+            Quantity: item.quantity
+        }))
+    };
+
+    try {
+        const response = await fetch('http://localhost:5000/api/Orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(order)
+        });
+
+        if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(errText || 'Ошибка сервера');
+        }
+
+        const createdOrder = await response.json();
+
+        // ✅ Только теперь очищаем корзину и обновляем кэш
+        cart = [];
+        // Запросим обновлённые остатки с сервера
+        await fetchProductsFromBackend();
+        updateCart();
+
+        cartModal.classList.remove('open');
+        alert(`Заказ №${createdOrder.id} успешно оформлен!`);
+    } catch (error) {
+        console.error('Ошибка при оформлении заказа:', error);
+        alert('Не удалось оформить заказ. Проверьте подключение или наличие товаров.');
+    }
+});
+let currentSearchQuery = '';
+let currentCategory = 'all';
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+const filterButtons = document.querySelectorAll('.filter-btn');
+const productGrids = document.querySelectorAll('.product-grid');
+
+function applyFilters() {
+  const query = currentSearchQuery.toLowerCase();
+  const category = currentCategory;
+
+  productCards.forEach(card => {
+    const name = card.querySelector('.product-info h3').textContent.toLowerCase();
+    const desc = card.querySelector('.product-short-desc').textContent.toLowerCase();
+    const cat = card.querySelector('.add-to-cart-btn').dataset.category;
+
+    const matchesSearch = query === '' || name.includes(query) || desc.includes(query);
+    const matchesCategory = category === 'all' || cat === category;
+
+    card.style.display = (matchesSearch && matchesCategory) ? '' : 'none';
+  });
+
+  // Скрыть категории без видимых товаров
+  productGrids.forEach(grid => {
+    const visibleCards = grid.querySelectorAll('.product-card:not([style*="display: none"])');
+    grid.closest('.card').style.display = visibleCards.length ? '' : 'none';
+  });
+}
+
+// Поиск
+searchInput.addEventListener('input', () => {
+  currentSearchQuery = searchInput.value.trim();
+  applyFilters();
+});
+
+// Фильтрация по категории
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCategory = btn.dataset.category;
+    applyFilters();
+  });
+});
+
+// Запуск
+initializeApp();
+</script>
+</body>
+</html>
+

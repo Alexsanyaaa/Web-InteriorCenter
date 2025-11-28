@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Интерьер-Центр - Главная</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Дополнительные стили для слайдера */
+    .slider-container {
+      position: relative;
+      max-width: 100%;
+      margin: 18px auto;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: 0 6px 18px var(--color-shadow);
+    }
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .slide {
+      min-width: 100%;
+      position: relative;
+    }
+    .slide img {
+      width: 100%;
+      display: block;
+      height: 550px;
+      object-fit: cover;
+    }
+    .slide .slide-content {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    .slider-nav button {
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 18px;
+      margin: 0 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .slider-nav button:hover {
+      background: var(--color-white);
+    }
+    .slider-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    .slider-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      cursor: pointer;
+    }
+    .slider-indicator.active {
+      background: var(--color-white);
+    }
+    /* Дополнительные стили для корзины */
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 24px;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--color-danger);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .cart-modal {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 350px;
+      background: var(--color-card);
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      z-index: 100;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-modal.open {
+      transform: translateX(0);
+    }
+    .cart-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .cart-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .cart-item-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .cart-item-price {
+      color: var(--color-danger);
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .quantity-btn {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quantity-value {
+      min-width: 20px;
+      text-align: center;
+    }
+    .cart-remove {
+      color: var(--color-danger);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .cart-footer {
+      padding: 20px;
+      border-top: 1px solid var(--color-border);
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .checkout-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--color-accent-secondary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .checkout-btn:hover {
+      background: #0da471;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="Pic\logo.svg" alt="Логотип">
+        <h1>ИНТЕРЬЕР-ЦЕНТР</h1>
+      </div>
+      <nav class="main-nav" role="navigation" aria-label="Главное меню">
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="products.html">Продукты</a>
+      </nav>
+      <div id="loginContainer">
+        <!-- Форма входа отображается по умолчанию -->
+        <form id="loginForm" class="login-form" aria-label="Форма входа">
+          <input type="text" id="username" placeholder="логин" autocomplete="username">
+          <input type="password" id="password" placeholder="пароль" autocomplete="current-password">
+          <input type="submit" value="войти">
+          <nav><a href="register.html" style="margin-top:85px; margin-left:-350px ; width:73px" class="btn btn-ghost">Регистрация</a></nav>
+        </form>
+        <!-- Сообщение "Добро пожаловать" отображается при успешном входе -->
+        <div id="welcomeMessage" class="welcome-message" style="display: none; align-items: center; gap: 10px;">
+          <span id="welcomeText"></span>
+          <button id="logoutBtn" class="btn btn-ghost" style="padding: 4px 8px; font-size: 12px;">Выйти</button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div id="login-message"></div>
+    </div>
+  </header>
+  <!-- MAIN -->
+  <main class="main" role="main">
+    <aside class="sidebar" aria-label="Боковое меню">
+      <nav>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="products.html">Продукты</a>
+      </nav>
+    </aside>
+    <section class="content">
+      <!-- Слайдер -->
+      <!-- Слайдер -->
+<div class="slider-container">
+  <div class="slider" id="sliderContent">
+    <!-- Слайды будут загружены динамически -->
+  </div>
+  <div class="slider-nav">
+    <button id="prevBtn">&#10094;</button>
+    <button id="nextBtn">&#10095;</button>
+  </div>
+  <div class="slider-indicators" id="sliderIndicators"></div>
+</div>
+
+      <div class="card">
+        <h1>Добро пожаловать в Интерьер-Центр</h1>
+        <p class="small">Мы создаём интерьерные решения — кухни, спальни и гостиные под ключ. На сайте вы найдёте каталог продукции, форму обратной связи и регистрацию.</p>
+      </div>
+      <div class="card main-features">
+        <h2>Наши преимущества</h2>
+        <ul style="padding-left: 4ch;">
+          <li>Более 18 лет опыта</li>
+          <li>Индивидуальный подход и собственное производство</li>
+          <li>Гарантия на продукцию и сборку</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Популярные категории</h2>
+        <ul style="padding-left: 4ch;">
+          <li><a href="products.html#kuhni">Кухни</a></li>
+          <li><a href="products.html#spalni">Спальни</a></li>
+          <li><a href="products.html#molodezhnye">Молодежные</a></li>
+          <li><a href="products.html#khranenie">Хранение</a></li>
+          <li><a href="products.html#stoly-i-stulya">Столы и стулья</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="footer-bottom__inner">
+          <div class="text15">© 2025 Интерьер-Центр</div>
+          <div class="text15">Тел: +7 (800) 700-20-58 | Email: <a href="mailto:info@interier-center.ru" class="link">info@interier-center.ru</a></div>
+          <div class="text15">Все права защищены</a></div>
+		   <div class="text15">Политика конфеденциальности : <a href="consent.pdf" class="link">Просмотреть соглашение (PDF)</a></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  
+  // --- Код для обработки формы входа/выхода и сохранения состояния ---
+    function checkLoginState() {
+      const token = localStorage.getItem('authToken'); // Используем токен для проверки авторизации
+
+      const loginForm = document.getElementById('loginForm');
+      const welcomeMessage = document.getElementById('welcomeMessage');
+      const welcomeText = document.getElementById('welcomeText');
+
+      if (token) {
+        // Если токен есть, значит пользователь залогинен.
+        // Делаем запрос к /api/account/me для получения данных пользователя
+        // Вместо этого эндпоинта, который не существует в вашем API, мы просто покажем имя из токена
+        // Для учебного проекта можно сделать так:
+        // 1. Раскодировать JWT-токен (если он в формате JWT) и извлечь username.
+        // 2. Или, как временное решение, просто использовать логин, который был использован для входа.
+        // Но поскольку у нас нет /api/account/me, мы будем использовать простой подход: показывать "Добро пожаловать!" без имени.
+        // В реальном проекте нужно реализовать эндпоинт /api/account/me.
+
+        loginForm.style.display = 'none';
+        welcomeMessage.style.display = 'flex';
+        welcomeText.textContent = `Добро пожаловать!`;
+      } else {
+        loginForm.style.display = 'flex';
+        welcomeMessage.style.display = 'none';
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      const msg = document.getElementById("login-message");
+
+      if (!u || !p) {
+        msg.textContent = "Не введён логин или пароль";
+        msg.style.display = "block";
+        msg.style.color = "#ef4444";
+        return;
+      }
+
+      // Отправляем запрос на вход
+      fetch('http://localhost:5000/api/Auth/login', { // Эндпоинт для входа
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              username: u,
+              password: p
+          })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Неверный логин или пароль');
+          }
+          return response.json();
+      })
+      .then(data => {
+          localStorage.setItem('authToken', data.token);
+          checkLoginState(); 
+          msg.textContent = `Успешный вход как ${u}!`;
+          msg.style.display = "block";
+          msg.style.color = "#0f766e";
+          setTimeout(() => { msg.style.display = "none"; }, 3000);
+      })
+      .catch(err => {
+          if (err instanceof TypeError) {
+              msg.textContent = "Ошибка сети: не удалось подключиться к серверу.";
+          } else {
+              msg.textContent = err.message;
+          }
+          msg.style.display = "block";
+          msg.style.color = "#ef4444";
+          setTimeout(() => { msg.style.display = "none"; }, 2000);
+      });
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      localStorage.removeItem('authToken');
+      checkLoginState();
+      const msg = document.getElementById("login-message");
+      msg.textContent = "Вы вышли из системы.";
+      msg.style.display = "block";
+      msg.style.color = "#0f766e";
+      setTimeout(() => { msg.style.display = "none"; }, 3000);
+    });
+
+    window.addEventListener('load', checkLoginState);
+
+// --- Код для слайдера ---
+let currentSlide = 0;
+let slides = [];
+let totalSlides = 0;
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const slider = document.querySelector('.slider');
+const indicatorsContainer = document.getElementById('sliderIndicators');
+
+const pictureIds = [1, 2, 3, 4, 5];
+
+async function loadPictureById(id) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/Picture/${id}`);
+    if (!response.ok) {
+      throw new Error(`Ошибка HTTP: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Ошибка загрузки картинки с ID ${id}:`, error);
+    return null;
+  }
+}
+
+async function loadSliderImages() {
+  slider.innerHTML = '';
+
+  const pictures = [];
+
+  for (const id of pictureIds) {
+    const pic = await loadPictureById(id);
+    if (pic) {
+      pictures.push(pic);
+    }
+  }
+
+  if (pictures.length === 0) {
+    slider.innerHTML = '<div class="slide"><p>Не удалось загрузить изображения.</p></div>';
+    return;
+  }
+
+  pictures.forEach((pic, index) => {
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slide');
+
+    const img = document.createElement('img');
+    img.src = pic.imageUrL;
+    img.alt = pic.title || `Картинка ${index + 1}`;
+
+    if (pic.title || pic.description) {
+      const contentDiv = document.createElement('div');
+      contentDiv.classList.add('slide-content');
+
+      if (pic.title) {
+        const h3 = document.createElement('h3');
+        h3.textContent = pic.title;
+        contentDiv.appendChild(h3);
+      }
+
+      if (pic.description) {
+        const p = document.createElement('p');
+        p.textContent = pic.description;
+        contentDiv.appendChild(p);
+      }
+
+      slideDiv.appendChild(contentDiv);
+    }
+
+    slideDiv.appendChild(img);
+    slider.appendChild(slideDiv);
+  });
+
+  slides = document.querySelectorAll('.slide');
+  totalSlides = slides.length;
+
+  indicatorsContainer.innerHTML = '';
+  for (let i = 0; i < totalSlides; i++) {
+    const indicator = document.createElement('button');
+    indicator.classList.add('slider-indicator');
+    if (i === 0) indicator.classList.add('active');
+    indicator.dataset.index = i;
+    indicator.addEventListener('click', () => goToSlide(i));
+    indicatorsContainer.appendChild(indicator);
+  }
+  const indicators = document.querySelectorAll('.slider-indicator');
+
+  function goToSlide(n) {
+    currentSlide = n;
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateIndicators();
+  }
+
+  function updateIndicators() {
+    indicators.forEach((indicator, index) => {
+      if (index === currentSlide) {
+        indicator.classList.add('active');
+      } else {
+        indicator.classList.remove('active');
+      }
+    });
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateIndicators();
+  }
+
+  prevBtn.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateIndicators();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateIndicators();
+  });
+
+  let slideInterval = setInterval(nextSlide, 5000);
+
+  const sliderContainer = document.querySelector('.slider-container');
+  sliderContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
+  sliderContainer.addEventListener('mouseleave', () => {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 5000);
+  });
+
+  goToSlide(0);
+
+}
+
+// Загружаем изображения при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadSliderImages);
+  </script>
+</body>
+</html>
+

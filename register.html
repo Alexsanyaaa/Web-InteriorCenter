@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Регистрация — Интерьер-Центр</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/logo.svg" alt="Логотип">
+        <h1>ИНТЕРЬЕР-ЦЕНТР</h1>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="products.html">Продукты</a>
+      </nav>
+      <div id="loginContainer">
+        <!-- Форма входа отображается по умолчанию -->
+        <form id="loginForm" class="login-form" aria-label="Форма входа">
+          <input type="text" id="username" placeholder="логин" autocomplete="username">
+          <input type="password" id="password" placeholder="пароль" autocomplete="current-password">
+          <input type="submit" value="войти">
+        </form>
+        <!-- Сообщение "Добро пожаловать" отображается при успешном входе -->
+        <div id="welcomeMessage" class="welcome-message" style="display: none; align-items: center; gap: 10px;">
+          <span id="welcomeText"></span>
+          <button id="logoutBtn" class="btn btn-ghost" style="padding: 4px 8px; font-size: 12px;">Выйти</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <aside class="sidebar">
+      <nav>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="products.html">Продукты</a>
+      </nav>
+    </aside>
+
+    <section class="content">
+      <div class="card" style="max-width:700px;">
+        <h1>Регистрация пользователя</h1>
+
+        <form id="registerForm" novalidate>
+          <div class="form-group">
+            <label for="fullname">ФИО</label>
+            <input id="fullname" name="fullname" type="text" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex:1;">
+              <label for="email">Электронная почта</label>
+              <input id="email" name="email" type="email" required>
+            </div>
+
+            <div class="form-group" style="width:220px;">
+              <label for="phone">Телефон</label>
+              <div style="display:flex; gap:12px;">
+                <div style="display:flex; align-items:center; padding:0 10px; border:1px solid #e6e9ee; border-radius:8px; background:#fbfffd;">+7</div>
+                <input id="phone" name="phone" type="tel" placeholder="9123456789" maxlength="10" pattern="\d{10}" required>
+              </div>
+              <div class="small">Введите 10 цифр (без пробелов) — номер после <strong>+7</strong></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex:1;">
+              <label for="usernameReg">Логин</label>
+              <input id="usernameReg" name="usernameReg" type="text" required>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label for="passwordReg">Пароль</label>
+              <input id="passwordReg" name="passwordReg" type="password" minlength="6" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex:1;">
+              <label for="passwordConfirmReg">Подтвердите пароль</label>
+              <input id="passwordConfirmReg" name="passwordConfirmReg" type="password" minlength="6" required>
+            </div>
+          </div>
+
+          <div class="form-group checkbox-row">
+            <input id="consent" type="checkbox" aria-describedby="consentDesc">
+            <label for="consent">Я даю согласие на обработку персональных данных</label>
+            <a class="link" href="consent.pdf" target="_blank" rel="noopener">Просмотреть соглашение (PDF)</a>
+          </div>
+
+          <div style="margin-top:8px;">
+            <button id="registerBtn" class="btn btn-primary" type="submit" style="margin-left:8px;">Зарегистрироваться</button>
+          </div>
+
+        </form>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-top__inner">
+          <div class="footer-info">
+            <a href="https://interior-center.ru" class="footer__logo">
+              <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/logo2.svg" alt="Логотип Интерьер-Центр">
+            </a>
+            <div class="footer-info__socials">
+              <div class="text15">Мы в социальных сетях:</div>
+              <div class="socials">
+                <a target="_blank" href="https://vk.com/interior.center" class="socials__item">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/vk.svg" alt="VK">
+                </a>
+                <a target="_blank" href="https://www.youtube.com/channel/UCz_w0Z3-1A3eq_jkd3IyPTQ" class="socials__item">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/youtube.svg" alt="Youtube">
+                </a>
+                <a target="_blank" href="https://t.me/interier_center" class="socials__item">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/tg.svg" alt="Телеграм">
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-nav">
+            <div class="footer-nav__top">
+              <div class="footer__title"> КОМПАНИЯ</div>
+            </div>
+            <div class="footer-nav__bottom">
+              <div class="footer-nav__links">
+                <li><a href="https://interior-center.ru/o-kompanii/">О компании</a></li>
+                <li><a href="https://interior-center.ru/sotrudnichestvo/">Сотрудничество</a></li>
+                <li><a href="https://interior-center.ru/nashi-kontakty/">Контакты</a></li>
+                <li><a href="https://interior-center.ru/nashi-servisy/">Сервисы</a></li>
+                <li><a href="https://interior-center.ru/category/blog/">Блог</a></li>
+              </div>
+            </div>
+          </div>
+          <div class="footer-nav">
+            <div class="footer-nav__top">
+              <div class="footer__title"> КАТАЛОГ мебели</div>
+            </div>
+            <div class="footer-nav__bottom">
+              <div class="footer-nav__links">
+                <li><a href="https://interior-center.ru/product-category/01-kuhni/">Кухни</a></li>
+                <li><a href="https://interior-center.ru/product-category/03-spalni/">Спальни</a></li>
+                <li><a href="https://interior-center.ru/product-category/04-molodezhnye/">Молодежные</a></li>
+                <li><a href="https://interior-center.ru/product-category/gostinye/06-komplekty-gostinyh/">Гостинные</a></li>
+                <li><a href="https://interior-center.ru/product-category/sistemy_khraneniya/">Хранение</a></li>
+                <li><a href="https://interior-center.ru/product-category/stoly_i_stulya/">Столы и стулья</a></li>
+                <li><a href="https://interior-center.ru/product-category/12-reklamnye-materialy/">Рекламные материалы</a></li>
+              </div>
+            </div>
+          </div>
+          <div class="footer-nav">
+            <div class="footer-nav__top">
+              <div class="footer__title"> Информация</div>
+            </div>
+            <div class="footer-nav__bottom">
+              <div class="footer-nav__links">
+                <li><a href="https://interior-center.ru/garantii/">Гарантии и возврат</a></li>
+                <li><a href="https://interior-center.ru/sertifikaty/">Сертификаты</a></li>
+                <li><a href="https://interior-center.ru/vacancies/">Вакансии</a></li>
+                <li><a href="https://interior-center.ru/vopros-otvet/">Вопрос-ответ</a></li>
+                <li><a href="https://interior-center.ru/adresa-magazinov/">Купить в розницу</a></li>
+                <li><a href="https://interior-center.ru/privacy-policy/">Политика конфиденциальности</a></li>
+              </div>
+            </div>
+          </div>
+          <div class="footer-contacts">
+            <div class="footer__title"> Наши контакты</div>
+            <div class="footer-contacts__inner">
+              <div class="footer-contacts__phones">
+                <a href="tel:+78007002058" class="footer-contacts__phone">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/phone.svg" alt="Телефон">
+                  <span>+7 800 700 20 58</span>
+                </a>
+                <a href="tel:+79374068421" class="footer-contacts__phone">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/phone.svg" alt="Телефон">
+                  <span>+7 937 406 84 21</span>
+                </a>
+                <div class="footer-contacts__messengers">
+                  <a target="_blank" href="https://wa.me/79374068421?text=     Здравствуйте%2C+у+меня+есть+вопрос" class="footer-contacts__messenger">
+                    <span>WhatsApp</span>
+                  </a>
+                  <a target="_blank" href="https://t.me/interiercenter" class="footer-contacts__messenger">
+                    <span>Telegram</span>
+                  </a>
+                </div>
+              </div>
+              <div class="footer-contacts__address">
+                <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/pin.svg" alt="Адрес">
+                <span>440004, г. Пенза, ул. Рябова, д. 31</span>
+              </div>
+              <a href="mailto:info@interier-center.ru" class="footer-contacts__email">
+                <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/email2.svg" alt="Email">
+                <span>info@interier-center.ru</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="footer-bottom__inner">
+          <div class="text15">© 2025 Интерьер-Центр</div>
+          <div class="text15">Тел: +7 (800) 700-20-58 | Email: <a href="mailto:info@interier-center.ru" class="link">info@interier-center.ru</a></div>
+		  		  <div class="text15">Все права защищены</a></div>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+if (!localStorage.getItem('redirectAfterRegister')) {
+  const ref = document.referrer;
+  if (ref && ref.includes(window.location.hostname)) {
+    localStorage.setItem('redirectAfterRegister', ref);
+  }
+}
+    // --- Код для обработки формы входа/выхода и сохранения состояния ---
+    function checkLoginState() {
+	const token = localStorage.getItem('authToken'); // Используем токен для проверки авторизации
+
+      const loginForm = document.getElementById('loginForm');
+      const welcomeMessage = document.getElementById('welcomeMessage');
+      const welcomeText = document.getElementById('welcomeText');
+
+      if (token) {
+        loginForm.style.display = 'none';
+        welcomeMessage.style.display = 'flex';
+        welcomeText.textContent = `Добро пожаловать!`;
+      } else {
+        loginForm.style.display = 'flex';
+        welcomeMessage.style.display = 'none';
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      const msg = document.getElementById("login-message");
+
+      if (!u || !p) {
+        msg.textContent = "Не введён логин или пароль";
+        msg.style.display = "block";
+        msg.style.color = "#ef4444";
+        return;
+      }
+
+      // Отправляем запрос на вход
+      fetch('http://localhost:5000/api/Auth/login', { // Эндпоинт для входа
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              username: u,
+              password: p
+          })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Неверный логин или пароль');
+          }
+          return response.json();
+      })
+      .then(data => {
+          // Сохраняем токен в localStorage
+          localStorage.setItem('authToken', data.token); // Предполагаем, что сервер возвращает JWT-токен
+		  localStorage.setItem('username', u); // <-- Сохраняем имя пользователя
+
+          checkLoginState(); // Обновляем UI
+          msg.textContent = `Успешный вход как ${u}!`;
+          msg.style.display = "block";
+          msg.style.color = "#0f766e";
+		  
+          setTimeout(() => { msg.style.display = "none"; }, 3000);
+      })
+      .catch(err => {
+          // Обработка ошибки сети или других проблем с fetch
+          if (err instanceof TypeError) {
+              msg.textContent = "Ошибка сети: не удалось подключиться к серверу.";
+          } else {
+              msg.textContent = err.message;
+          }
+          msg.style.display = "block";
+          msg.style.color = "#ef4444";
+          setTimeout(() => { msg.style.display = "none"; }, 5000);
+      });
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      localStorage.removeItem('authToken'); // Удаляем токен
+      checkLoginState(); // Обновляем UI
+      const msg = document.getElementById("login-message");
+      msg.textContent = "Вы вышли из системы.";
+      msg.style.display = "block";
+      msg.style.color = "#0f766e";
+      setTimeout(() => { msg.style.display = "none"; }, 3000);
+    });
+
+    window.addEventListener('load', checkLoginState);
+
+	// --- Код для обработки формы регистрации ---
+	// --- Код для обработки формы регистрации ---
+	const registerForm = document.getElementById('registerForm'); // предполагается, что форма имеет id="registerForm"
+
+
+    // phone input: only digits allowed
+    const phone = document.getElementById('phone');
+    phone.addEventListener('input', e => {
+      e.target.value = e.target.value.replace(/\D/g,'').slice(0,10);
+    });
+
+    // form submit: register new user
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const consent = document.getElementById('consent');
+  if (!consent.checked) {
+    alert('Пожалуйста, подтвердите согласие на обработку персональных данных.');
+    return;
+  }
+
+  // --- дальше идёт обычная валидация ---
+  const fn = document.getElementById('fullname').value.trim();
+  const em = document.getElementById('email').value.trim();
+  const ph = phone.value.trim();
+  const un = document.getElementById('usernameReg').value.trim();
+  const pw = document.getElementById('passwordReg').value;
+  const pwc = document.getElementById('passwordConfirmReg').value;
+
+  if (!fn || !em || !ph || !un || !pw || !pwc) {
+    alert('Заполните все поля');
+    return;
+  }
+  if (pw.length < 6) {
+    alert('Пароль должен быть минимум 6 символов');
+    return;
+  }
+  if (pw !== pwc) {
+    alert('Пароли не совпадают');
+    return;
+  }
+  if (!/^\d{10}$/.test(ph)) {
+    alert('Телефон должен содержать 10 цифр после +7');
+    return;
+  }
+  if (!em.includes('@')) {
+    alert('Некорректный email');
+    return;
+  }
+
+  // --- отправка на сервер ---
+  fetch('http://localhost:5000/api/Auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      username: un,
+      password: pw,
+      email: em,
+      fullName: fn,
+      phone: `+7${ph}`
+    })
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('Ошибка регистрации. Пользователь с таким логином, email или телефон уже существует.');
+    return response.json();
+  })
+  .then(() => {
+    alert('Регистрация успешно завершена!');
+    this.reset();
+    // Автоматический вход
+    return fetch('http://localhost:5000/api/Auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: un, password: pw })
+    });
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('Не удалось войти после регистрации');
+    return response.json();
+  })
+.then(data => {
+  localStorage.setItem('authToken', data.token);
+  checkLoginState();
+
+  // Перенаправление после регистрации
+  let redirectUrl = localStorage.getItem('redirectAfterRegister');
+  if (!redirectUrl || !redirectUrl.includes(window.location.hostname)) {
+    redirectUrl = 'index.html';
+  }
+  localStorage.removeItem('redirectAfterRegister');
+  window.location.href = redirectUrl;
+})
+  .catch(err => {
+    if (err instanceof TypeError) {
+      alert("Ошибка сети: не удалось подключиться к серверу.");
+    } else {
+      alert(err.message);
+    }
+  });
+});
+  </script>
+</body>
+</html>
+
