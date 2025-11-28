@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>О нас — Интерьер-Центр</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="Pic\logo.svg" alt="Логотип">
+        <h1>ИНТЕРЬЕР-ЦЕНТР</h1>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="products.html">Продукты</a>
+      </nav>
+      <div id="loginContainer">
+        <!-- Форма входа отображается по умолчанию -->
+        <form id="loginForm" class="login-form" aria-label="Форма входа">
+          <input type="text" id="username" placeholder="логин" autocomplete="username">
+          <input type="password" id="password" placeholder="пароль" autocomplete="current-password">
+          <input type="submit" value="войти">
+		  		  <nav><a href="register.html" style="margin-top:85px; margin-left:-350px ; width:73px" class="btn btn-ghost">Регистрация</a>      </nav>
+
+        </form>
+        <!-- Сообщение "Добро пожаловать" отображается при успешном входе -->
+        <div id="welcomeMessage" class="welcome-message" style="display: none; align-items: center; gap: 10px;">
+          <span id="welcomeText"></span>
+          <button id="logoutBtn" class="btn btn-ghost" style="padding: 4px 8px; font-size: 12px;">Выйти</button>
+        </div>
+      </div>
+    </div>
+	    <div class="container">
+      <div id="login-message"></div>
+    </div>
+  </header>
+
+  <main class="main">
+    <aside class="sidebar">
+      <nav>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="products.html">Продукты</a>
+      </nav>
+    </aside>
+
+    <section class="content">
+      <div class="card">
+        <h1>О компании</h1>
+        <p>Интерьер-Центр — производство мебели и интерьерных решений с индивидуальным подходом. Наши специалисты помогают от проекта до установки.</p>
+      </div>
+
+      <div class="card">
+        <h2>Этапы работы</h2>
+        <ol>
+          <li>Консультация и замер</li>
+          <li>Дизайн-проект</li>
+          <li>Производство и контроль качества</li>
+          <li>Доставка и монтаж</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-top__inner">
+          <div class="footer-info">
+            <a href="https://interior-center.ru" class="footer__logo">
+              <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/logo2.svg" alt="Логотип Интерьер-Центр">
+            </a>
+            <div class="footer-info__socials">
+              <div class="text15">Мы в социальных сетях:</div>
+              <div class="socials">
+                <a target="_blank" href="https://vk.com/interior.center" class="socials__item">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/vk.svg" alt="VK">
+                </a>
+                <a target="_blank" href="https://www.youtube.com/channel/UCz_w0Z3-1A3eq_jkd3IyPTQ" class="socials__item">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/youtube.svg" alt="Youtube">
+                </a>
+                <a target="_blank" href="https://t.me/interier_center" class="socials__item">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/tg.svg" alt="Телеграм">
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-nav">
+            <div class="footer-nav__top">
+              <div class="footer__title"> КОМПАНИЯ</div>
+            </div>
+            <div class="footer-nav__bottom">
+              <div class="footer-nav__links">
+                <li><a href="https://interior-center.ru/o-kompanii/">О компании</a></li>
+                <li><a href="https://interior-center.ru/sotrudnichestvo/">Сотрудничество</a></li>
+                <li><a href="https://interior-center.ru/nashi-kontakty/">Контакты</a></li>
+                <li><a href="https://interior-center.ru/nashi-servisy/">Сервисы</a></li>
+                <li><a href="https://interior-center.ru/category/blog/">Блог</a></li>
+              </div>
+            </div>
+          </div>
+          <div class="footer-nav">
+            <div class="footer-nav__top">
+              <div class="footer__title"> КАТАЛОГ мебели</div>
+            </div>
+            <div class="footer-nav__bottom">
+              <div class="footer-nav__links">
+                <li><a href="https://interior-center.ru/product-category/01-kuhni/">Кухни</a></li>
+                <li><a href="https://interior-center.ru/product-category/03-spalni/">Спальни</a></li>
+                <li><a href="https://interior-center.ru/product-category/04-molodezhnye/">Молодежные</a></li>
+                <li><a href="https://interior-center.ru/product-category/gostinye/06-komplekty-gostinyh/">Гостинные</a></li>
+                <li><a href="https://interior-center.ru/product-category/sistemy_khraneniya/">Хранение</a></li>
+                <li><a href="https://interior-center.ru/product-category/stoly_i_stulya/">Столы и стулья</a></li>
+                <li><a href="https://interior-center.ru/product-category/12-reklamnye-materialy/">Рекламные материалы</a></li>
+              </div>
+            </div>
+          </div>
+          <div class="footer-nav">
+            <div class="footer-nav__top">
+              <div class="footer__title"> Информация</div>
+            </div>
+            <div class="footer-nav__bottom">
+              <div class="footer-nav__links">
+                <li><a href="https://interior-center.ru/garantii/">Гарантии и возврат</a></li>
+                <li><a href="https://interior-center.ru/sertifikaty/">Сертификаты</a></li>
+                <li><a href="https://interior-center.ru/vacancies/">Вакансии</a></li>
+                <li><a href="https://interior-center.ru/vopros-otvet/">Вопрос-ответ</a></li>
+                <li><a href="https://interior-center.ru/adresa-magazinov/">Купить в розницу</a></li>
+                <li><a href="https://interior-center.ru/privacy-policy/">Политика конфиденциальности</a></li>
+              </div>
+            </div>
+          </div>
+          <div class="footer-contacts">
+            <div class="footer__title"> Наши контакты</div>
+            <div class="footer-contacts__inner">
+              <div class="footer-contacts__phones">
+                <a href="tel:+78007002058" class="footer-contacts__phone">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/phone.svg" alt="Телефон">
+                  <span>+7 800 700 20 58</span>
+                </a>
+                <a href="tel:+79374068421" class="footer-contacts__phone">
+                  <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/phone.svg" alt="Телефон">
+                  <span>+7 937 406 84 21</span>
+                </a>
+                <div class="footer-contacts__messengers">
+                  <a target="_blank" href="https://wa.me/79374068421?text=Здравствуйте%2C+у+меня+есть+вопрос" class="footer-contacts__messenger">
+                    <span>WhatsApp</span>
+                  </a>
+                  <a target="_blank" href="https://t.me/interiercenter" class="footer-contacts__messenger">
+                    <span>Telegram</span>
+                  </a>
+                </div>
+              </div>
+              <div class="footer-contacts__address">
+                <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/pin.svg" alt="Адрес">
+                <span>440004, г. Пенза, ул. Рябова, д. 31</span>
+              </div>
+              <a href="mailto:info@interier-center.ru" class="footer-contacts__email">
+                <img src="https://interior-center.ru/wp-content/themes/interier2/assets/img/email2.svg" alt="Email">
+                <span>info@interier-center.ru</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="footer-bottom__inner">
+          <div class="text15">© 2025 Интерьер-Центр</div>
+          <div class="text15">Тел: +7 (800) 700-20-58 | Email: <a href="mailto:info@interier-center.ru" class="link">info@interier-center.ru</a></div>
+		  		  <div class="text15">Все права защищены</a></div>
+				   <div class="text15">Политика конфеденциальности : <a href="consent.pdf" class="link">Просмотреть соглашение (PDF)</a></div>
+
+
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+// --- Код для обработки формы входа/выхода и сохранения состояния ---
+    function checkLoginState() {
+      const token = localStorage.getItem('authToken'); // Используем токен для проверки авторизации
+
+      const loginForm = document.getElementById('loginForm');
+      const welcomeMessage = document.getElementById('welcomeMessage');
+      const welcomeText = document.getElementById('welcomeText');
+
+      if (token) {
+        // Если токен есть, значит пользователь залогинен.
+        // Делаем запрос к /api/account/me для получения данных пользователя
+        // Вместо этого эндпоинта, который не существует в вашем API, мы просто покажем имя из токена
+        // Для учебного проекта можно сделать так:
+        // 1. Раскодировать JWT-токен (если он в формате JWT) и извлечь username.
+        // 2. Или, как временное решение, просто использовать логин, который был использован для входа.
+        // Но поскольку у нас нет /api/account/me, мы будем использовать простой подход: показывать "Добро пожаловать!" без имени.
+        // В реальном проекте нужно реализовать эндпоинт /api/account/me.
+
+        loginForm.style.display = 'none';
+        welcomeMessage.style.display = 'flex';
+        welcomeText.textContent = `Добро пожаловать!`;
+      } else {
+        loginForm.style.display = 'flex';
+        welcomeMessage.style.display = 'none';
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      const msg = document.getElementById("login-message");
+
+      if (!u || !p) {
+        msg.textContent = "Не введён логин или пароль";
+        msg.style.display = "block";
+        msg.style.color = "#ef4444";
+        return;
+      }
+
+      // Отправляем запрос на вход
+      fetch('http://localhost:5000/api/Auth/login', { // Эндпоинт для входа
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              username: u,
+              password: p
+          })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Неверный логин или пароль');
+          }
+          return response.json();
+      })
+      .then(data => {
+          // Сохраняем токен в localStorage
+          localStorage.setItem('authToken', data.token); // Предполагаем, что сервер возвращает JWT-токен
+          checkLoginState(); // Обновляем UI
+          msg.textContent = `Успешный вход как ${u}!`;
+          msg.style.display = "block";
+          msg.style.color = "#0f766e";
+          setTimeout(() => { msg.style.display = "none"; }, 3000);
+      })
+      .catch(err => {
+          // Обработка ошибки сети или других проблем с fetch
+          if (err instanceof TypeError) {
+              msg.textContent = "Ошибка сети: не удалось подключиться к серверу.";
+          } else {
+              msg.textContent = err.message;
+          }
+          msg.style.display = "block";
+          msg.style.color = "#ef4444";
+          setTimeout(() => { msg.style.display = "none"; }, 5000);
+      });
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      localStorage.removeItem('authToken'); // Удаляем токен
+      checkLoginState(); // Обновляем UI
+      const msg = document.getElementById("login-message");
+      msg.textContent = "Вы вышли из системы.";
+      msg.style.display = "block";
+      msg.style.color = "#0f766e";
+      setTimeout(() => { msg.style.display = "none"; }, 3000);
+    });
+
+    window.addEventListener('load', checkLoginState);
+  </script>
+</body>
+</html>
